@@ -1,5 +1,7 @@
 # Evanescence
 
+[![Push & PR](https://github.com/florindiconescu/evanescence/actions/workflows/main.yml/badge.svg)](https://github.com/florindiconescu/evanescence/actions/workflows/main.yml)
+
 In memory cache that expires the least used items, and limits the cache size by a maximum number of items.
 
 ## Usage
