@@ -1,0 +1,31 @@
+inherit_from:
+  - ../.rubocop.yml
+
+require: rubocop-rspec
+
+Metrics/BlockLength:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+  - integration/**/*
+RSpec/ExampleLength:
+  Max: 10
+  CountAsOne:
+    - hash
+RSpec/IndexedLet:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/NestedGroups:
+  Enabled: false
+RSpec/NotToNot:
+  EnforcedStyle: not_to
+
+
+Style/BlockDelimiters:
+  Enabled: false
