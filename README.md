@@ -1,6 +1,7 @@
 # Evanescence
 
 [![Push & PR](https://github.com/florindiconescu/evanescence/actions/workflows/main.yml/badge.svg)](https://github.com/florindiconescu/evanescence/actions/workflows/main.yml)
+[![Gem Version](https://badge.fury.io/rb/evanescence.svg)](https://badge.fury.io/rb/evanescence)
 
 In memory cache which can limit the cache size by a maximum number by expiring the least used cached items.
 
