@@ -5,7 +5,7 @@ module Evanescence
 
   module_function
 
-  def initialize_cache(max_size:)
+  def initialize_cache(max_size: nil)
     Cache.new(max_size:)
   end
 end

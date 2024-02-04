@@ -4,23 +4,42 @@ RSpec.describe Evanescence do
   end
 
   describe "cache" do
-    subject(:cache) { described_class.initialize_cache(max_size:) }
+    context "when max_size present" do
+      subject(:cache) { described_class.initialize_cache(max_size: 3) }
 
-    let(:max_size) { 3 }
+      before do
+        cache.write("key1", "val1")
+        cache.write("key2", "val2")
+        cache.write("key3", "val3")
+      end
 
-    before do
-      cache.write("key1", "val1")
-      cache.write("key2", "val2")
-      cache.write("key3", "val3")
+      it "pushes out least used items when max_size is reached" do
+        expect(cache.to_h).to eq({"key1" => "val1", "key2" => "val2", "key3" => "val3"})
+        expect(cache.read("key1")).to eq("val1")
+        expect(cache.write("key4", "val4")).to eq("val4")
+        expect(cache.to_h).to eq({"key1" => "val1", "key3" => "val3", "key4" => "val4"})
+        cache.clear
+        expect(cache.to_h).to eq({})
+      end
     end
 
-    it "generally works" do
-      expect(cache.to_h).to eq({"key1" => "val1", "key2" => "val2", "key3" => "val3"})
-      expect(cache.read("key1")).to eq("val1")
-      expect(cache.write("key4", "val4")).to eq("val4")
-      expect(cache.to_h).to eq({"key1" => "val1", "key3" => "val3", "key4" => "val4"})
-      cache.clear
-      expect(cache.to_h).to eq({})
+    context "when max_size nil" do
+      subject(:cache) { described_class.initialize_cache }
+
+      before do
+        cache.write("key1", "val1")
+        cache.write("key2", "val2")
+        cache.write("key3", "val3")
+      end
+
+      it "generally works" do
+        expect(cache.to_h).to eq({"key1" => "val1", "key2" => "val2", "key3" => "val3"})
+        expect(cache.read("key1")).to eq("val1")
+        expect(cache.write("key4", "val4")).to eq("val4")
+        expect(cache.to_h).to eq({"key1" => "val1", "key2" => "val2", "key3" => "val3", "key4" => "val4"})
+        cache.clear
+        expect(cache.to_h).to eq({})
+      end
     end
   end
 end
