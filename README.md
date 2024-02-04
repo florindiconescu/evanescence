@@ -2,11 +2,11 @@
 
 [![Push & PR](https://github.com/florindiconescu/evanescence/actions/workflows/main.yml/badge.svg)](https://github.com/florindiconescu/evanescence/actions/workflows/main.yml)
 
-In memory cache that expires the least used items, and limits the cache size by a maximum number of items.
+In memory cache which can limit the cache size by a maximum number by expiring the least used cached items.
 
 ## Usage
 
-Initiate a cache object. It requires the max number of records as an argument:
+Initiate a cache object. Optionally pass the max number of records as an argument:
 ```
 cache = Evanescence.initialize_cache(max_size: 1000)
 ```
@@ -21,8 +21,6 @@ Delete the entire cache: `cache.clear`
 Check the cache size: `cache.count`
 
 ## Next steps
-Allow the cache to grow without a maximum size limit.
-
 Expire the cache after given time.
 
 Enhance the API.
