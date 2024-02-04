@@ -38,8 +38,8 @@ end
 In your model class:
 ```
 class Article < ApplicationRecord
-	caches by: :id, max_size: 1000
-	...
+  caches by: :id, max_size: 1000
+  ...
 end
 ```
 
