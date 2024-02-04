@@ -23,7 +23,7 @@ Check the cache size: `cache.count`
 
 ### In rails with activerecords:
 
-Add "evanescence" to your gemfile.
+Add `gem "evanescence"` to your gemfile.
 
 In your `ApplicationRecord`:
 ```
