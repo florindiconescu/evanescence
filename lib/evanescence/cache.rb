@@ -2,61 +2,59 @@ module Evanescence
   # Simple implementation of caching
   class Cache
     def initialize(max_size:)
-      @max_size = max_size
       @items = {}
+      @max_size = max_size
     end
 
-    Item = Struct.new("Item", :value, :usage_counter)
-
     def to_h
-      {}.tap do |h|
-        @items.each { |k, v| h[k] = v.value }
-      end
+      items.transform_values(&:first)
     end
 
     def write(key, val)
-      reject_least_used_item
-      existing_item = @items[key]
-      existing_item ? update_value(existing_item, value) : @items[key] = Item.new(val, 1)
+      reject_least_used_item if max_size
+      existing_item = items[key]
+      existing_item ? update_value(existing_item, val) : items[key] = [val, 1]
 
-      @items[key].value
+      items[key].first
     end
 
     def read(key)
-      item = @items[key]
+      item = items[key]
       return unless item
 
-      item.usage_counter += 1
-      item.value
+      item[1] += 1 if max_size
+      item.first
     end
 
     def delete(key)
-      @items.delete(key)
+      items.delete(key)
     end
 
     def clear
       count_before_clear = count
-      @items.clear
+      items.clear
       count_before_clear
     end
 
     def count
-      @items.count
+      items.count
     end
 
     private
 
+    attr_reader :items, :max_size
+
     def update_value(item, value)
       item.tap do |i|
-        i.value = value
-        i.usage_counter += 1
+        i.first = value
+        i[1] += 1 if max_size
       end
     end
 
     def reject_least_used_item
-      return if @items.size < @max_size
+      return if items.size < max_size
 
-      min = @items.min_by { |_, v| v.usage_counter }
+      min = items.min_by { |_, v| v.last }
       delete(min[0])
     end
   end
