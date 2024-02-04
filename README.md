@@ -21,6 +21,34 @@ Delete the entire cache: `cache.clear`
 
 Check the cache size: `cache.count`
 
+### In rails with activerecords:
+
+Add "evanescence" to your gemfile.
+
+In your `ApplicationRecord`:
+```
+require "evanescence/cacheable"
+
+class ApplicationRecord < ActiveRecord::Base
+  extend Evanescence::Cacheable
+  ...
+end
+```
+
+In your model class:
+```
+class Article < ApplicationRecord
+	caches by: :id, max_size: 1000
+	...
+end
+```
+
+In your controller:
+```
+Article.get_by(params[:id])
+```
+
+
 ## Next steps
 Expire the cache after given time.
 
